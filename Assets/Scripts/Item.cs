@@ -12,7 +12,7 @@ public class Item
     public Sprite sprite;
     public List<string> tags;
 
-    public Item(string title, int id, int rarity, string description, List<string> tags, string sprite)
+    public Item(int id, string title, int rarity, string description, List<string> tags, string sprite)
     {
         this.title = title;
         this.id = id;

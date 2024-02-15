@@ -6,7 +6,7 @@ using System.Linq;
 public class Inventory : MonoBehaviour
 {
     Dictionary<Item, int> inventory = new Dictionary<Item, int>();
-    int itemCapacity = 12;
+    protected int itemCapacity = 12;
 
     public void AddItem(Item itemToAdd, int amount)
     {
@@ -15,10 +15,11 @@ public class Inventory : MonoBehaviour
             if(itemToAdd != null)
             {
                 inventory.Add(itemToAdd, amount);
+                Debug.Log("Added " + amount + " of item " + itemToAdd + " to inventory!");
             }
             else
             {
-                Debug.Log("Item not found!");
+                Debug.Log("Item " + itemToAdd + " not found!");
             }
         }
         else
@@ -34,10 +35,16 @@ public class Inventory : MonoBehaviour
             if (inventory[itemToRemove] - amount > 0)
             {
                 inventory[itemToRemove] = inventory[itemToRemove] - amount;
+                Debug.Log("Removed " + amount + " of " + itemToRemove + " from inventory!");
             }
             else if (inventory[itemToRemove] - amount == 0)
             {
                 inventory.Remove(itemToRemove);
+                Debug.Log("Removed all of " + itemToRemove + " from inventory!");
+            }
+            else
+            {
+                Debug.Log("Inventory doesn't contain " + amount + " of " + itemToRemove + "!");
             }
         }
         else
@@ -63,11 +70,6 @@ public class Inventory : MonoBehaviour
     public int GetInventoryCapacity()
     {
         return inventory.Count;
-    }
-
-    public Item FindItemById(int itemId)
-    {
-        return inventory.FirstOrDefault(i => i.Key.id == itemId).Key;
     }
 
     public List<Item> FindItemsByTag(string tag)
