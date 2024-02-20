@@ -71,12 +71,4 @@ public class Inventory : MonoBehaviour
     {
         return inventory.Count;
     }
-
-    public List<Item> FindItemsByTag(string tag)
-    {
-        List<Item> matches = inventory.Where(pair => pair.Key.tags.Contains(tag))
-            .Select(pair => pair.Key)
-            .ToList();
-        return matches;
-    }
 }

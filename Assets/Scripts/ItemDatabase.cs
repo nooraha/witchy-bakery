@@ -14,7 +14,7 @@ public class ItemDatabase : MonoBehaviour
     {
         itemList = new List<Item>
         {
-            { new Item(0, "Empty", 0, "", new List<string> {}, "") },
+            { new Item(0, "Unknown", 0, "", new List<string> {}, "") },
             { new Item(1, "Apple", 1, "A shiny red apple", new List<string>
             {
                 "fruit", "sweet", "ingredient"
@@ -46,5 +46,11 @@ public class ItemDatabase : MonoBehaviour
             Debug.Log("Item with id " + itemId + " doesn't exist!");
             return itemList.Find(i => i.id == 0);
         }
+    }
+
+    public List<Item> FindItemsByTag(string tag)
+    {
+        List<Item> matches = itemList.FindAll(item => item.tags.Contains(tag));
+        return matches;
     }
 }

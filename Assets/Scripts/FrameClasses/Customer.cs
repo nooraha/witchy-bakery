@@ -4,5 +4,7 @@ using UnityEngine;
 
 public class Customer : MonoBehaviour
 {
-    public string nickname;
+    public string title;
+    public int id;
+    public Sprite sprite;
 }
