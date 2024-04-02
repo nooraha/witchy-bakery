@@ -1,37 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PlayerMovement : MonoBehaviour
 {
-    Vector2 targetPosition = Vector2.zero;
-    public int speed = 10;
+    Vector3 targetPosition;
+    NavMeshAgent agent;
+
+    private void Awake()
+    {
+        agent = FindObjectOfType<NavMeshAgent>();
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
+    }
 
     private void Update()
     {
-        CheckIfTargetPosition();
+        UpdateTargetPosition();
+        UpdateAgentDestination();
+    }
 
-        if(Input.GetMouseButtonDown(0))
+    void UpdateTargetPosition()
+    {
+        if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
         {
-            // if player clicked on the floor move to position
             targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         }
     }
 
-    void CheckIfTargetPosition()
+    void UpdateAgentDestination()
     {
-        if (!targetPosition.Equals(Vector2.zero))
-        {
-            MoveToTargetPosition();
-            if (Vector2.Distance(transform.position, targetPosition) < 0.01)
-            {
-                targetPosition = Vector2.zero;
-            }
-        }
-    }
-
-    void MoveToTargetPosition()
-    {
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * speed);
+        agent.SetDestination(new Vector3(targetPosition.x, targetPosition.y, transform.position.z));
     }
 }

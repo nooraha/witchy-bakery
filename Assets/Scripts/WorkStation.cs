@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class WorkStation : Inventory
 {
-
-    public void MakeItem()
+    public void OpenIngredienSelectionGUI()
     {
-
+        Debug.Log("Opening ingredient selection GUI");
     }
 }
