@@ -5,32 +5,44 @@ using UnityEngine.AI;
 
 public class PlayerMovement : MonoBehaviour
 {
-    Vector3 targetPosition;
-    NavMeshAgent agent;
+    Vector2 targetPosition;
+    bool moving = false;
 
-    private void Awake()
-    {
-        agent = FindObjectOfType<NavMeshAgent>();
-        agent.updateRotation = false;
-        agent.updateUpAxis = false;
-    }
 
     private void Update()
     {
         UpdateTargetPosition();
-        UpdateAgentDestination();
+        if(moving)
+        {
+            MoveToTargetPosition();
+        }
     }
 
     void UpdateTargetPosition()
     {
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
         {
-            targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 ray = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(ray, Vector2.zero);
+            if(hit.collider != null)
+            {
+                if (hit.collider.CompareTag("Floor"))
+                {
+                    targetPosition = new Vector2(hit.point.x, hit.point.y);
+                    moving = true;
+                }
+            }
+            
         }
     }
 
-    void UpdateAgentDestination()
+    void MoveToTargetPosition()
     {
-        agent.SetDestination(new Vector3(targetPosition.x, targetPosition.y, transform.position.z));
+        transform.position = Vector2.MoveTowards(transform.position, targetPosition, Time.deltaTime);
+        if(Vector2.Distance(transform.position, targetPosition) < 0.1f)
+        {
+            moving = false;
+        }
     }
+
 }

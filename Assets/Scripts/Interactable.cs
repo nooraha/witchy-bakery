@@ -30,14 +30,17 @@ public class Interactable : MonoBehaviour
 
     private void Update()
     {
-        if(clicked)
+        if (clicked)
         {
-            distanceToPlayer = Vector2.Distance(gameObject.transform.position, player.transform.position);
-            if (distanceToPlayer < 2)
-            {
-                clicked = false;
-                Interact();
-            }
+            clicked = false;
+            Interact();
+
+            //distanceToPlayer = Vector2.Distance(gameObject.transform.position, player.transform.position);
+            //if (distanceToPlayer < 2)
+            //{
+            //    clicked = false;
+            //    Interact();
+            //}
         }
     }
 }
