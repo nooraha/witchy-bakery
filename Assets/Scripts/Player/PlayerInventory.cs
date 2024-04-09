@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class PlayerInventory : Inventory
 {
-    ItemDatabase itemDB;
 
     private void Start()
     {
-        itemDB = FindObjectOfType<ItemDatabase>();
         itemDB.BuildItemDatabase();
         itemCapacity = 3;
 
-        AddItem(itemDB.FindItemById(1), 3);
+        AddItem(1, 3);
         
     }
 }

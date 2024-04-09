@@ -19,7 +19,7 @@ public class Item
         this.rarity = rarity;
         this.description = description;
         this.tags = tags;
-        this.sprite = Resources.Load<Sprite>("Sprites/" + sprite);
+        this.sprite = Resources.Load<Sprite>("Sprites/Items/" + sprite);
     }
 
     public override string ToString()

@@ -5,14 +5,21 @@ using System.Linq;
 
 public class Inventory : MonoBehaviour
 {
-    Dictionary<Item, int> inventory = new Dictionary<Item, int>();
+    Dictionary<int, int> inventory = new Dictionary<int, int>();
     protected int itemCapacity = 12;
 
-    public void AddItem(Item itemToAdd, int amount)
+    public ItemDatabase itemDB;
+
+    private void Awake()
+    {
+        itemDB = FindObjectOfType<ItemDatabase>();
+    }
+
+    public void AddItem(int itemToAdd, int amount)
     {
         if(GetInventoryCapacity() < itemCapacity)
         {
-            if(itemToAdd != null)
+            if(itemDB.FindItemById(itemToAdd) != null)
             {
                 inventory.Add(itemToAdd, amount);
                 Debug.Log("Added " + amount + " of item " + itemToAdd + " to inventory!");
@@ -28,7 +35,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void RemoveItem(Item itemToRemove, int amount)
+    public void RemoveItem(int itemToRemove, int amount)
     {
         if(inventory.ContainsKey(itemToRemove))
         {
@@ -54,7 +61,7 @@ public class Inventory : MonoBehaviour
         
     }
 
-    public int FindAmountOfItem(Item item)
+    public int FindAmountOfItem(int item)
     {
         if(inventory.ContainsKey(item))
         {

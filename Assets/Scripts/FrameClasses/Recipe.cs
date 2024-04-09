@@ -8,34 +8,16 @@ public class Recipe
 {
     public string title;
     public int id;
-    public Dictionary<Item, int> ingredients;
-    public Dictionary<Item, int> products;
-    public WorkStation workStation;
+    public Dictionary<int, int> ingredients;
+    public int product;
+    public List<string> tags;
 
-    public Recipe(string title, int id, Dictionary<Item, int> ingredients, Dictionary<Item, int> products, WorkStation workStation)
+    public Recipe(string title, int id, Dictionary<int, int> ingredients, int product, List<string> tags)
     {
         this.title = title;
         this.id = id;
         this.ingredients = ingredients;
-        this.products = products;
-        this.workStation = workStation;
-    }
-}
-
-public class RecipesList : MonoBehaviour
-{
-    public List<Recipe> availableRecipes;
-    public Inventory inventory;
-
-    public bool AbleToMakeRecipe(Recipe recipe)
-    {
-        foreach(KeyValuePair<Item, int> ingredient in recipe.ingredients)
-        {
-            if(inventory.FindAmountOfItem(ingredient.Key) < ingredient.Value)
-            {
-                return false;
-            }
-        }
-        return true;
+        this.product = product;
+        this.tags = tags;
     }
 }

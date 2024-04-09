@@ -6,10 +6,10 @@ public class Order
 {
     public int id;
     public int customer;
-    public List<Item> items;
+    public List<int> items;
     public Payout payout;
 
-    public Order(int id, int customer, List<Item> items, Payout payout)
+    public Order(int id, int customer, List<int> items, Payout payout)
     {
         this.id = id;
         this.customer = customer;
@@ -61,7 +61,7 @@ public class OrdersList : MonoBehaviour
     {
         // increment exp by order.payout.exp
         // increment money by order.payout.money
-        foreach(KeyValuePair<Item, int> pair in order.payout.items)
+        foreach(KeyValuePair<int, int> pair in order.payout.items)
         {
             playerInventory.AddItem(pair.Key, pair.Value);
         }
@@ -85,7 +85,7 @@ public class OrderDatabase : MonoBehaviour
 
     }
 
-    public void AddNewOrder(int id, int customer, List<Item> items, Payout payout)
+    public void AddNewOrder(int id, int customer, List<int> items, Payout payout)
     {
         orderList.Add(new Order(id, customer, items, payout));
     }

@@ -8,6 +8,7 @@ public class ItemDatabase : MonoBehaviour
 
     private void Start()
     {
+        BuildItemDatabase();
     }
 
     public void BuildItemDatabase()
@@ -18,19 +19,19 @@ public class ItemDatabase : MonoBehaviour
             { new Item(1, "Apple", 1, "A shiny red apple", new List<string>
             {
                 "fruit", "sweet", "ingredient"
-            }, "") },
+            }, "testSprite") },
             {new Item(2, "Flour", 1, "It doesn't taste like anything", new List<string>
             {
                 "ingredient"
-            }, "") },
+            }, "testSprite") },
             {new Item(3, "Cocoa powder", 2, "So good...", new List<string>
             {
                 "ingredient"
-            }, "") },
+            }, "testSprite") },
             new Item(4, "Green Slime", 1, "Slimey", new List<string>
             {
                 "disgusting", "inedible", "ingredient"
-            }, "")
+            }, "testSprite")
         };
     }
 
@@ -48,9 +49,14 @@ public class ItemDatabase : MonoBehaviour
         }
     }
 
-    public List<Item> FindItemsByTag(string tag)
+    public List<int> FindItemsByTag(string tag)
     {
-        List<Item> matches = itemList.FindAll(item => item.tags.Contains(tag));
+        List<Item> matchingItems = itemList.FindAll(item => item.tags.Contains(tag));
+        List<int> matches = new List<int>();
+        foreach(Item item in matchingItems)
+        {
+            matches.Add(item.id);
+        }
         return matches;
     }
 }
