@@ -8,8 +8,7 @@ public class BakingMenuGUI : MonoBehaviour
 {
     RecipeBookGUI recipeBookGUI;
     CanvasGroup bakingMenu;
-
-    string currentWorkstation = "oven";
+    WorkStation currentWorkstation;
 
     private void Awake()
     {
@@ -29,20 +28,20 @@ public class BakingMenuGUI : MonoBehaviour
         bakingMenu.blocksRaycasts = false;
     }
 
-    public void OpenBakingMenu()
+    public void OpenBakingMenu(WorkStation workstation)
     {
         bakingMenu.alpha = 1;
         bakingMenu.interactable = true;
         bakingMenu.blocksRaycasts = true;
 
-        UpdateWorkstation(currentWorkstation);
+        UpdateWorkstation(workstation);
     }
 
-    public void UpdateWorkstation(string newWorkStation)
+    public void UpdateWorkstation(WorkStation newWorkstation)
     {
-        currentWorkstation = newWorkStation;
+        currentWorkstation = newWorkstation;
         recipeBookGUI.UpdateRecipes(currentWorkstation);
     }
 
-
+    
 }

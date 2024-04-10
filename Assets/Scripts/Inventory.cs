@@ -21,7 +21,14 @@ public class Inventory : MonoBehaviour
         {
             if(itemDB.FindItemById(itemToAdd) != null)
             {
-                inventory.Add(itemToAdd, amount);
+                if(FindAmountOfItem(itemToAdd) == 0)
+                {
+                    inventory.Add(itemToAdd, amount);
+                }
+                else
+                {
+                    inventory[itemToAdd] += amount;
+                }
                 Debug.Log("Added " + amount + " of item " + itemToAdd + " to inventory!");
             }
             else

@@ -10,14 +10,14 @@ public class Recipe
     public int id;
     public Dictionary<int, int> ingredients;
     public int product;
-    public List<string> tags;
+    public WorkstationType workstation;
 
-    public Recipe(string title, int id, Dictionary<int, int> ingredients, int product, List<string> tags)
+    public Recipe(string title, int id, Dictionary<int, int> ingredients, int product, WorkstationType workstation)
     {
         this.title = title;
         this.id = id;
         this.ingredients = ingredients;
         this.product = product;
-        this.tags = tags;
+        this.workstation = workstation;
     }
 }

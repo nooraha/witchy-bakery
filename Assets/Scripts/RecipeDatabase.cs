@@ -15,12 +15,12 @@ public class RecipeDatabase : MonoBehaviour
     {
         recipeList = new List<Recipe>
         {
-            { new Recipe("unknown", 0, new Dictionary<int, int>() {  }, 0, new List<string>() {}) },
-            { new Recipe("recipe 1", 1, new Dictionary<int, int>() { { 1, 1 } }, 2, new List<string>() { "oven"}) },
-            { new Recipe("skillet apple", 2, new Dictionary<int, int>() { { 3, 1 } }, 1, new List<string>() { "skillet"}) },
-            { new Recipe("recipe 3", 3, new Dictionary<int, int>() { { 3, 1 } }, 2, new List<string>() { "skillet"}) },
-            { new Recipe("oven apple", 4, new Dictionary<int, int>() { { 4, 1 }, {2, 2 } }, 1, new List<string>() { "oven"}) },
-            { new Recipe("recipe 5", 5, new Dictionary<int, int>() { { 2, 1 } }, 4, new List<string>() { "oven"}) },
+            { new Recipe("unknown", 0, new Dictionary<int, int>() {  }, 0, WorkstationType.Unknown) },
+            { new Recipe("recipe 1", 1, new Dictionary<int, int>() { { 1, 1 } }, 2, WorkstationType.Oven) },
+            { new Recipe("skillet apple", 2, new Dictionary<int, int>() { { 3, 1 } }, 1, WorkstationType.Cauldron) },
+            { new Recipe("recipe 3", 3, new Dictionary<int, int>() { { 3, 1 } }, 2, WorkstationType.Cauldron) },
+            { new Recipe("oven apple", 4, new Dictionary<int, int>() { { 4, 1 }, {2, 2 } }, 1, WorkstationType.Oven) },
+            { new Recipe("recipe 5", 5, new Dictionary<int, int>() { { 2, 1 } }, 4, WorkstationType.MixingBowl) },
         };
     }
 
@@ -38,13 +38,9 @@ public class RecipeDatabase : MonoBehaviour
         }
     }
 
-    public List<Recipe> FindRecipesByTag(string tag)
+    public List<Recipe> FindRecipesByWorkstation(WorkstationType type)
     {
-        List<Recipe> matches = recipeList.FindAll(recipe => recipe.tags.Contains(tag));
-        foreach(Recipe match in matches)
-        {
-            Debug.Log(match);
-        }
+        List<Recipe> matches = recipeList.FindAll(recipe => recipe.workstation == type);
         return matches;
     }
 }
