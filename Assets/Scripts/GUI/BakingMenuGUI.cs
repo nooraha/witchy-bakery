@@ -4,36 +4,25 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class BakingMenuGUI : MonoBehaviour
+public class BakingMenuGUI : UICanvasManager
 {
     RecipeBookGUI recipeBookGUI;
-    CanvasGroup bakingMenu;
     WorkStation currentWorkstation;
 
     private void Awake()
     {
-        bakingMenu = FindObjectOfType<CanvasGroup>();
         recipeBookGUI = FindObjectOfType<RecipeBookGUI>();
+        UIcanvas = GetComponent<CanvasGroup>();
     }
 
     private void Start()
     {
-        HideBakingMenu();
-    }
-
-    public void HideBakingMenu()
-    {
-        bakingMenu.alpha = 0;
-        bakingMenu.interactable = false;
-        bakingMenu.blocksRaycasts = false;
+        HideUI();
     }
 
     public void OpenBakingMenu(WorkStation workstation)
     {
-        bakingMenu.alpha = 1;
-        bakingMenu.interactable = true;
-        bakingMenu.blocksRaycasts = true;
-
+        ShowUI();
         UpdateWorkstation(workstation);
     }
 

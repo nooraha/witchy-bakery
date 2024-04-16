@@ -23,45 +23,20 @@ public class WorkStation : MonoBehaviour
         bakingMenuGUI.OpenBakingMenu(this);
     }
 
-    public bool PlayerHasRequiredIngredients(Recipe recipe)
-    {
-        Dictionary<int, int> ingredients = recipe.ingredients;
-        foreach (KeyValuePair<int, int> pair in ingredients)
-        {
-            if (playerInventory.FindAmountOfItem(pair.Key) < pair.Value)
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
     public void MakeRecipe(Recipe recipe)
     {
         Dictionary<int, int> ingredients = recipe.ingredients;
         int product = recipe.product;
 
-        TakeIngredients(ingredients);
+        playerInventory.RemoveDictionaryItems(ingredients);
         // Start the workstation-specific minigame
-        GiveProduct(product);
+        playerInventory.AddItem(product, 1);
 
         Debug.Log("One " + itemDB.FindItemById(product) + " coming right up!");
 
-        bakingMenuGUI.HideBakingMenu();
+        bakingMenuGUI.HideUI();
     }
 
-    private void TakeIngredients(Dictionary<int, int> ingredients)
-    {
-        foreach (KeyValuePair<int, int> pair in ingredients)
-        {
-            playerInventory.RemoveItem(pair.Key, pair.Value);
-        }
-    }
-
-    private void GiveProduct(int product)
-    {
-        playerInventory.AddItem(product, 1);
-    }
 }
 
 public enum WorkstationType

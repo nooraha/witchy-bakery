@@ -8,11 +8,16 @@ public class Inventory : MonoBehaviour
     Dictionary<int, int> inventory = new Dictionary<int, int>();
     protected int itemCapacity = 12;
 
-    public ItemDatabase itemDB;
+    protected ItemDatabase itemDB;
 
     private void Awake()
     {
         itemDB = FindObjectOfType<ItemDatabase>();
+    }
+
+    public int GetItemCapacity()
+    {
+        return itemCapacity;
     }
 
     public void AddItem(int itemToAdd, int amount)
@@ -68,6 +73,14 @@ public class Inventory : MonoBehaviour
         
     }
 
+    public void RemoveDictionaryItems(Dictionary<int, int> dict)
+    {
+        foreach (KeyValuePair<int, int> pair in dict)
+        {
+            RemoveItem(pair.Key, pair.Value);
+        }
+    }
+
     public int FindAmountOfItem(int item)
     {
         if(inventory.ContainsKey(item))
@@ -79,6 +92,18 @@ public class Inventory : MonoBehaviour
             return 0;
         }
         
+    }
+
+    public bool InventoryContainsItems(Dictionary<int, int> dict)
+    {
+        foreach (KeyValuePair<int, int> pair in dict)
+        {
+            if (FindAmountOfItem(pair.Key) < pair.Value)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     public int GetInventoryCapacity()

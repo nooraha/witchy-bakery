@@ -114,7 +114,7 @@ public class RecipeBookGUI : MonoBehaviour
     {
         Recipe currentRecipe = availableRecipes[currentRecipeIndex];
 
-        if (currentWorkstation.PlayerHasRequiredIngredients(currentRecipe))
+        if (playerInventory.InventoryContainsItems(currentRecipe.ingredients))
         {
             makeButton.interactable = true;
         }
