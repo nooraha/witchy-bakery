@@ -8,7 +8,7 @@ public class PlayerInventory : Inventory
     private void Start()
     {
         itemDB.BuildItemDatabase();
-        itemCapacity = 3;
+        itemCapacity = 99;
 
         AddItem(1, 3);
         

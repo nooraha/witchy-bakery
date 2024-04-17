@@ -20,7 +20,7 @@ public class CustomerInstance : MonoBehaviour
         ordersList = FindObjectOfType<OrdersList>();
 
         UpdateCurrentOrder(new Order(1, 1, new Dictionary<int, int> { { 2, 1 } }));
-        //spriteRenderer.sprite = customer's sprite
+        
     }
 
     public void UpdateCurrentOrder(Order order)
@@ -28,6 +28,12 @@ public class CustomerInstance : MonoBehaviour
         currentOrder = order;
         orderTaken = false;
         orderFulfilled = false;
+    }
+
+    public void UpdateCustomerIdentity(Customer customer)
+    {
+        this.customer = customer;
+        //spriteRenderer.sprite = customer's sprite
     }
 
     public void TryToFulfillOrder()
@@ -67,6 +73,7 @@ public class CustomerInstance : MonoBehaviour
             else
             {
                 Debug.Log("Order fulfilled already");
+                LeaveBakery();
             }
         }
     }

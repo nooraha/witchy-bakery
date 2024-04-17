@@ -20,9 +20,14 @@ public class Inventory : MonoBehaviour
         return itemCapacity;
     }
 
+    public Dictionary<int, int> GetFullInventory()
+    {
+        return inventory;
+    }
+
     public void AddItem(int itemToAdd, int amount)
     {
-        if(GetInventoryCapacity() < itemCapacity)
+        if(GetTotalItemCount() < itemCapacity)
         {
             if(itemDB.FindItemById(itemToAdd) != null)
             {
@@ -106,7 +111,7 @@ public class Inventory : MonoBehaviour
         return true;
     }
 
-    public int GetInventoryCapacity()
+    public int GetTotalItemCount()
     {
         return inventory.Count;
     }

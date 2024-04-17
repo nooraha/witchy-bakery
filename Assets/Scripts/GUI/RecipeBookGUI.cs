@@ -73,7 +73,7 @@ public class RecipeBookGUI : MonoBehaviour
 
     public void UpdateRecipeBook()
     {
-        Recipe currentRecipe = availableRecipes[currentRecipeIndex];
+        Recipe currentRecipe = GetCurrentRecipe();
 
         string title = currentRecipe.title;
         int product = currentRecipe.product;
@@ -86,21 +86,27 @@ public class RecipeBookGUI : MonoBehaviour
         Item productItem = itemDB.FindItemById(product);
         productItemSlot.UpdateItem(productItem);
 
-        // Remove all ingredients in ingredient panel (left over from previous recipe)
-        while(ingredientsPanel.childCount > 0)
-        {
-            DestroyImmediate(ingredientsPanel.GetChild(0).gameObject);
-        }
+        ResetIngredientsPanel();
 
         // Update panel with new ingredients
         foreach (KeyValuePair<int, int> pair in ingredients)
         {
+            int itemAmount = pair.Value;
             GameObject ingrInstance = Instantiate(itemSlotPrefab, ingredientsPanel);
             Item ingrItem = itemDB.FindItemById(pair.Key);
-            ingrInstance.GetComponent<ItemSlotUI>().UpdateItem(ingrItem);
+            ingrInstance.GetComponent<ItemSlotUI>().UpdateItem(ingrItem, itemAmount);
         }
 
         EnableOrDisableMakeButton();
+    }
+
+    private void ResetIngredientsPanel()
+    {
+        // Remove all ingredients in ingredient panel (left over from previous recipe)
+        while (ingredientsPanel.childCount > 0)
+        {
+            DestroyImmediate(ingredientsPanel.GetChild(0).gameObject);
+        }
     }
 
     private void InstantiateProductPreview()
@@ -112,9 +118,7 @@ public class RecipeBookGUI : MonoBehaviour
 
     private void EnableOrDisableMakeButton()
     {
-        Recipe currentRecipe = availableRecipes[currentRecipeIndex];
-
-        if (playerInventory.InventoryContainsItems(currentRecipe.ingredients))
+        if (playerInventory.InventoryContainsItems(GetCurrentRecipe().ingredients))
         {
             makeButton.interactable = true;
         }
@@ -124,10 +128,14 @@ public class RecipeBookGUI : MonoBehaviour
         }
     }
 
+    public Recipe GetCurrentRecipe()
+    {
+        return availableRecipes[currentRecipeIndex];
+    }
+
     public void MakeCurrentRecipe()
     {
-        Recipe currentRecipe = availableRecipes[currentRecipeIndex];
-        currentWorkstation.MakeRecipe(currentRecipe);
+        currentWorkstation.MakeRecipe(GetCurrentRecipe());
     }
 
     
