@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class CustomerInstance : MonoBehaviour
 {
     public Customer customer;
+    public string customerName;
+
     bool orderTaken = false;
     bool orderFulfilled = false;
     Order currentOrder;
@@ -12,15 +15,14 @@ public class CustomerInstance : MonoBehaviour
     SpriteRenderer spriteRenderer;
     PlayerInventory playerInventory;
     OrdersList ordersList;
+    CustomerDatabase customerDB;
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         playerInventory = FindObjectOfType<PlayerInventory>();
         ordersList = FindObjectOfType<OrdersList>();
-
-        UpdateCurrentOrder(new Order(1, 1, new Dictionary<int, int> { { 2, 1 } }));
-        
+        customerDB = FindObjectOfType<CustomerDatabase>();
     }
 
     public void UpdateCurrentOrder(Order order)
@@ -30,10 +32,11 @@ public class CustomerInstance : MonoBehaviour
         orderFulfilled = false;
     }
 
-    public void UpdateCustomerIdentity(Customer customer)
+    public void UpdateCustomerIdentity(int customerId)
     {
-        this.customer = customer;
-        //spriteRenderer.sprite = customer's sprite
+        customer = customerDB.FindCustomerById(customerId);
+        spriteRenderer.sprite = customer.sprite;
+        customerName = customer.title;
     }
 
     public void TryToFulfillOrder()
@@ -52,7 +55,7 @@ public class CustomerInstance : MonoBehaviour
         }
     }
 
-    public void MakeOrder()
+    public void TakeOrder()
     {
         ordersList.ActivateOrder(currentOrder);
         orderTaken = true;
@@ -62,7 +65,8 @@ public class CustomerInstance : MonoBehaviour
     {
         if(!orderTaken)
         {
-            MakeOrder();
+            TakeOrder();
+            Debug.Log("Order taken!");
         }
         else
         {

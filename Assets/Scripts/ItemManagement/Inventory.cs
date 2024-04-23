@@ -25,7 +25,7 @@ public class Inventory : MonoBehaviour
         return inventory;
     }
 
-    public void AddItem(int itemToAdd, int amount)
+    public virtual void AddItem(int itemToAdd, int amount)
     {
         if(GetTotalItemCount() < itemCapacity)
         {

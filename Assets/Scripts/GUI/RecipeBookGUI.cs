@@ -91,10 +91,11 @@ public class RecipeBookGUI : MonoBehaviour
         // Update panel with new ingredients
         foreach (KeyValuePair<int, int> pair in ingredients)
         {
-            int itemAmount = pair.Value;
+            int itemAmount = playerInventory.FindAmountOfItem(pair.Key);
+            int requiredAmount = pair.Value;
             GameObject ingrInstance = Instantiate(itemSlotPrefab, ingredientsPanel);
             Item ingrItem = itemDB.FindItemById(pair.Key);
-            ingrInstance.GetComponent<ItemSlotUI>().UpdateItem(ingrItem, itemAmount);
+            ingrInstance.GetComponent<ItemSlotUI>().UpdateItem(ingrItem, itemAmount, requiredAmount);
         }
 
         EnableOrDisableMakeButton();
