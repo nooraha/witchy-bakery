@@ -30,6 +30,7 @@ public class WorkStation : MonoBehaviour
 
         playerInventory.RemoveDictionaryItems(ingredients);
         // Start the workstation-specific minigame
+        // Opens specific canvas, generic MinigameManager class?
         playerInventory.AddItem(product, 1);
 
         Debug.Log("One " + itemDB.FindItemById(product) + " coming right up!");

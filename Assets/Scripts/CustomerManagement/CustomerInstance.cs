@@ -10,7 +10,7 @@ public class CustomerInstance : MonoBehaviour
 
     bool orderTaken = false;
     bool orderFulfilled = false;
-    Order currentOrder;
+    public Order currentOrder;
 
     SpriteRenderer spriteRenderer;
     PlayerInventory playerInventory;

@@ -6,16 +6,16 @@ using TMPro;
 
 public class OrdersListUI : MonoBehaviour
 {
-    public Transform orderItemsPanel;
-    public TMP_Text customerNameText;
-
-    public GameObject itemSlotPrefab;
+    List<OrderUI> orderUIs = new List<OrderUI>();
 
     int displayedOrderIndex = 0;
 
     PlayerInventory playerInventory;
     ItemDatabase itemDB;
     OrdersList ordersList;
+
+    public GameObject orderUIPrefab;
+    public Transform orderPanel;
 
     private void Awake()
     {
@@ -26,92 +26,71 @@ public class OrdersListUI : MonoBehaviour
 
     private void Start()
     {
-        UpdateDisplayedOrder();
-        playerInventory.onItemAdded.AddListener(UpdateOrderItemsAmount);
+        //UpdateDisplayedOrder();
+        playerInventory.onItemAdded.AddListener(UpdateAllOrderItemsAmount);
+        ordersList.onOrderTaken.AddListener(InstantiateNewOrder);
+        ordersList.onOrderCompleted.AddListener(RemoveOrder);
     }
 
-    public void FillOrderInfo(Order order)
+    public void UpdateAllOrderItemsAmount()
     {
-        Dictionary<int, int> requestedItems = order.requestedItems;
-
-        ResetOrderItemsPanel();
-        FillOrderItemsPanel(requestedItems);
-        //UpdateCustomerName(customerId);
-    }
-
-    void FillOrderItemsPanel(Dictionary<int, int> requestedItems)
-    {
-        foreach (KeyValuePair<int, int> pair in requestedItems)
+        foreach(OrderUI orderUI in orderUIs)
         {
-            int itemAmount = playerInventory.FindAmountOfItem(pair.Key);
-            int requiredAmount = pair.Value;
-            GameObject instance = Instantiate(itemSlotPrefab, orderItemsPanel);
-            Item item = itemDB.FindItemById(pair.Key);
-            instance.GetComponent<ItemSlotUI>().UpdateItem(item, itemAmount, requiredAmount);
+            orderUI.UpdateOrderItemsAmount();
         }
     }
 
-    void UpdateOrderItemsAmount()
+    public void InstantiateNewOrder(Order order)
     {
-        for(int i = 0; i < orderItemsPanel.childCount; i++)
-        {
-            ItemSlotUI itemSlotUI = orderItemsPanel.GetChild(i).GetComponent<ItemSlotUI>();
-            Item item = itemSlotUI.item;
-            int itemAmount = playerInventory.FindAmountOfItem(item.id);
-            itemSlotUI.UpdateItem(item, itemAmount,itemSlotUI.requiredAmount);
-        }
+        GameObject instance = Instantiate(orderUIPrefab, orderPanel);
+        instance.transform.SetAsFirstSibling();
+        OrderUI orderUI = instance.GetComponent<OrderUI>();
+        orderUI.order = order;
+        orderUI.FillOrderInfo();
+        orderUIs.Add(orderUI);
     }
 
-    void ResetOrderItemsPanel()
+    public void RemoveOrder(Order order)
     {
-        while (orderItemsPanel.childCount > 0)
+        OrderUI orderUIToRemove = orderUIs.Find(i => i.order == order);
+        if(orderUIToRemove != null)
         {
-            DestroyImmediate(orderItemsPanel.GetChild(0).gameObject);
+            orderUIs.Remove(orderUIToRemove);
+            Destroy(orderUIToRemove.gameObject);
         }
-    }
-
-    void UpdateCustomerName(int customerId)
-    {
-        customerNameText.text = customerId.ToString();
-    }
-
-    void DisplayNoOrdersInfo()
-    {
-        ResetOrderItemsPanel();
-        customerNameText.text = "No orders";
-    }
-
-    public void UpdateDisplayedOrder()
-    {
-        if(displayedOrderIndex >= ordersList.activeOrders.Count)
-        {
-            displayedOrderIndex = 0;
-        }
-
-        if(ordersList.activeOrders.Count != 0)
-        {
-            Order displayedOrder = ordersList.activeOrders[displayedOrderIndex];
-            FillOrderInfo(displayedOrder);
-        }
-        else
-        {
-            DisplayNoOrdersInfo();
-        }
-    
         
     }
 
-    public void DisplayNextOrder()
-    {
-        if (displayedOrderIndex == ordersList.activeOrders.Count - 1)
-        {
-            displayedOrderIndex = 0;
-        }
-        else
-        {
-            displayedOrderIndex++;
-        }
+    //public void UpdateDisplayedOrder()
+    //{
+    //    if(displayedOrderIndex >= ordersList.activeOrders.Count)
+    //    {
+    //        displayedOrderIndex = 0;
+    //    }
 
-        UpdateDisplayedOrder();
-    }
+    //    if(ordersList.activeOrders.Count != 0)
+    //    {
+    //        Order displayedOrder = ordersList.activeOrders[displayedOrderIndex];
+    //        FillOrderInfo(displayedOrder);
+    //    }
+    //    else
+    //    {
+    //        DisplayNoOrdersInfo();
+    //    }
+  
+    //}
+
+    //public void DisplayNextOrder()
+    //{
+    //    if (displayedOrderIndex == ordersList.activeOrders.Count - 1)
+    //    {
+    //        displayedOrderIndex = 0;
+    //    }
+    //    else
+    //    {
+    //        displayedOrderIndex++;
+    //    }
+
+    //    UpdateDisplayedOrder();
+    //}
 }

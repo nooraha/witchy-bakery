@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.Progress;
+using UnityEngine.Events;
 
 public class OrdersList : MonoBehaviour
 {
     public List<Order> activeOrders = new List<Order>();
     public List<Order> completedOrders = new List<Order>();
+
+    public UnityEvent<Order> onOrderTaken = new UnityEvent<Order>();
+    public UnityEvent<Order> onOrderCompleted = new UnityEvent<Order>();
 
     PlayerInventory playerInventory;
     PlayerCurrency playerCurrency;
@@ -24,7 +28,8 @@ public class OrdersList : MonoBehaviour
     public void ActivateOrder(Order order)
     {
         activeOrders.Add(order);
-        ordersListUI.UpdateDisplayedOrder();
+        //ordersListUI.UpdateDisplayedOrder();
+        onOrderTaken.Invoke(order);
     }
 
     public void MarkOrderComplete(Order order)
@@ -35,7 +40,8 @@ public class OrdersList : MonoBehaviour
             completedOrders.Add(order);
             GiveOrderCompletionRewards(order);
             Debug.Log("Completed order " + order.id);
-            ordersListUI.UpdateDisplayedOrder();
+            onOrderCompleted.Invoke(order);
+            //ordersListUI.UpdateDisplayedOrder();
         }
         else
         {

@@ -19,7 +19,7 @@ public class ItemSlotUI : MonoBehaviour
 
     private void Awake()
     {
-        itemImage = GetComponentInChildren<Image>();
+        itemImage = transform.Find("ItemImage").GetComponent<Image>();
         itemNameText = transform.Find("ItemName").GetComponent<TMP_Text>();
         itemAmountText = transform.Find("ItemAmount").GetComponent<TMP_Text>();
     }

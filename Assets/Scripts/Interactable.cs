@@ -17,7 +17,8 @@ public class Interactable : MonoBehaviour
 
     private void OnMouseDown()
     {
-        clicked = true;
+        //clicked = true;
+        Interact();
     }
 
     private void Interact()
@@ -32,8 +33,8 @@ public class Interactable : MonoBehaviour
     {
         if (clicked)
         {
-            clicked = false;
-            Interact();
+            //clicked = false;
+            //Interact();
 
             //distanceToPlayer = Vector2.Distance(gameObject.transform.position, player.transform.position);
             //if (distanceToPlayer < 2)
