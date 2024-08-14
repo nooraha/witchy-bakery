@@ -15,20 +15,17 @@ public class OrdersList : MonoBehaviour
     PlayerInventory playerInventory;
     PlayerCurrency playerCurrency;
     ItemDatabase itemDB;
-    OrdersListUI ordersListUI;
 
     private void Start()
     {
         playerInventory = FindObjectOfType<PlayerInventory>();
         playerCurrency = FindObjectOfType<PlayerCurrency>();
         itemDB = FindObjectOfType<ItemDatabase>();
-        ordersListUI = FindObjectOfType<OrdersListUI>();
     }
 
     public void ActivateOrder(Order order)
     {
         activeOrders.Add(order);
-        //ordersListUI.UpdateDisplayedOrder();
         onOrderTaken.Invoke(order);
     }
 
@@ -41,7 +38,6 @@ public class OrdersList : MonoBehaviour
             GiveOrderCompletionRewards(order);
             Debug.Log("Completed order " + order.id);
             onOrderCompleted.Invoke(order);
-            //ordersListUI.UpdateDisplayedOrder();
         }
         else
         {

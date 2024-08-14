@@ -8,8 +8,6 @@ public class OrdersListUI : MonoBehaviour
 {
     List<OrderUI> orderUIs = new List<OrderUI>();
 
-    int displayedOrderIndex = 0;
-
     PlayerInventory playerInventory;
     ItemDatabase itemDB;
     OrdersList ordersList;
@@ -60,37 +58,4 @@ public class OrdersListUI : MonoBehaviour
         }
         
     }
-
-    //public void UpdateDisplayedOrder()
-    //{
-    //    if(displayedOrderIndex >= ordersList.activeOrders.Count)
-    //    {
-    //        displayedOrderIndex = 0;
-    //    }
-
-    //    if(ordersList.activeOrders.Count != 0)
-    //    {
-    //        Order displayedOrder = ordersList.activeOrders[displayedOrderIndex];
-    //        FillOrderInfo(displayedOrder);
-    //    }
-    //    else
-    //    {
-    //        DisplayNoOrdersInfo();
-    //    }
-  
-    //}
-
-    //public void DisplayNextOrder()
-    //{
-    //    if (displayedOrderIndex == ordersList.activeOrders.Count - 1)
-    //    {
-    //        displayedOrderIndex = 0;
-    //    }
-    //    else
-    //    {
-    //        displayedOrderIndex++;
-    //    }
-
-    //    UpdateDisplayedOrder();
-    //}
 }

@@ -21,7 +21,7 @@ public class Interactable : MonoBehaviour
         Interact();
     }
 
-    private void Interact()
+    public void Interact()
     {
         if (interaction != null)
         {

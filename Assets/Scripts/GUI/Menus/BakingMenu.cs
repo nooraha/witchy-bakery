@@ -4,15 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class BakingMenuGUI : UICanvasManager
+public class BakingMenu : BaseMenu
 {
     RecipeBookGUI recipeBookGUI;
     WorkStation currentWorkstation;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         recipeBookGUI = FindObjectOfType<RecipeBookGUI>();
-        UIcanvas = GetComponent<CanvasGroup>();
     }
 
     private void Start()
@@ -20,9 +20,9 @@ public class BakingMenuGUI : UICanvasManager
         HideUI();
     }
 
-    public void OpenBakingMenu(WorkStation workstation)
+    public void OpenMenu(WorkStation workstation)
     {
-        ShowUI();
+        OpenMenu();
         UpdateWorkstation(workstation);
     }
 

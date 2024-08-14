@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventoryGUI : UICanvasManager
+public class InventoryMenu : BaseMenu
 {
     PlayerInventory playerInventory;
     ItemDatabase itemDB;
@@ -11,12 +11,15 @@ public class InventoryGUI : UICanvasManager
 
     public GameObject itemSlotPrefab;
 
-    private void Awake()
+    protected override void Awake()
     {
-        UIcanvas = GetComponent<CanvasGroup>();
+        base.Awake();
         playerInventory = FindObjectOfType<PlayerInventory>();
         itemDB = FindObjectOfType<ItemDatabase>();
+    }
 
+    private void Start()
+    {
         HideUI();
     }
 
@@ -41,9 +44,9 @@ public class InventoryGUI : UICanvasManager
         }
     }
 
-    public void OpenInventoryGUI()
+    public override void OpenMenu()
     {
-        ShowUI();
+        base.OpenMenu();
         ResetInventoryItems();
         DisplayInventoryItems();
     }

@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class UICanvasManager : MonoBehaviour
+public class BaseMenu : MonoBehaviour
 {
     protected CanvasGroup UIcanvas;
 
-    private void Awake()
+    private GameStateManager gameStateManager;
+
+    protected virtual void Awake()
     {
         UIcanvas = GetComponent<CanvasGroup>();
+        gameStateManager = FindObjectOfType<GameStateManager>();
     }
 
     public void HideUI()
@@ -23,5 +27,18 @@ public class UICanvasManager : MonoBehaviour
         UIcanvas.alpha = 1;
         UIcanvas.interactable = true;
         UIcanvas.blocksRaycasts = true;
+        
+    }
+
+    public virtual void OpenMenu()
+    {
+        ShowUI();
+        gameStateManager.setState(GameState.Menu);
+    }
+
+    public virtual void CloseMenu()
+    {
+        HideUI();
+        gameStateManager.setState(GameState.Playing);
     }
 }

@@ -5,7 +5,7 @@ using static UnityEditor.Progress;
 
 public class WorkStation : MonoBehaviour
 {
-    BakingMenuGUI bakingMenuGUI;
+    BakingMenu bakingMenu;
     PlayerInventory playerInventory;
     ItemDatabase itemDB;
 
@@ -13,14 +13,14 @@ public class WorkStation : MonoBehaviour
 
     private void Awake()
     {
-        bakingMenuGUI = FindObjectOfType<BakingMenuGUI>();
+        bakingMenu = FindObjectOfType<BakingMenu>();
         playerInventory = FindObjectOfType<PlayerInventory>();
         itemDB = FindObjectOfType<ItemDatabase>();
     }
 
     public void OpenBakingGUI()
     {
-        bakingMenuGUI.OpenBakingMenu(this);
+        bakingMenu.OpenMenu(this);
     }
 
     public void MakeRecipe(Recipe recipe)
@@ -35,7 +35,7 @@ public class WorkStation : MonoBehaviour
 
         Debug.Log("One " + itemDB.FindItemById(product) + " coming right up!");
 
-        bakingMenuGUI.HideUI();
+        bakingMenu.HideUI();
     }
 
 }
